@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { postSmurf } from "../../actions";
@@ -11,7 +11,7 @@ const SmurfForm = () => {
     name: "",
     age: "",
     height: "",
-    id: smurfs.length
+    id: 0
   };
 
   const [formState, setFormState] = useState(initialState);
@@ -22,8 +22,18 @@ const SmurfForm = () => {
   };
 
   const handleChange = e => {
-    setFormState({ ...formState, [e.target.name]: e.target.value });
+    setFormState({
+      ...formState,
+      [e.target.name]: e.target.value,
+      id: smurfs.length
+    });
   };
+
+  useEffect(() => {
+    console.log(smurfs);
+    console.log(formState);
+  }, [formState]);
+
   return (
     <form>
       <input

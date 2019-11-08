@@ -1,42 +1,45 @@
 import axios from "axios";
 
-export const FETCH_SMURFS_LOADING = `FETCH_SMURFS_LOADING`;
-export const FETCH_SMURFS_SUCCESS = `FETCH_SMURFS_SUCCESS`;
-export const FETCH_SMURFS_FAILED = `FETCH_SMURFS_FAILED`;
+export const LOADING = `FETCH_SMURFS_LOADING`;
+export const LOAD_SUCCESS = `FETCH_SMURFS_SUCCESS`;
+export const LOAD_FAILED = `FETCH_SMURFS_FAILED`;
 
-export const smurfsLoading = () => ({ type: FETCH_SMURFS_LOADING });
+export const loading = () => ({ type: LOADING });
 
-export const smurfsLoadSuccess = payload => ({
-  type: FETCH_SMURFS_SUCCESS,
+export const loadSuccess = payload => ({
+  type: LOAD_SUCCESS,
   payload
 });
 
-export const smurfsLoadFailed = payload => ({
-  type: FETCH_SMURFS_FAILED,
+export const loadFailed = payload => ({
+  type: LOAD_FAILED,
   payload
 });
 
 export const fetchSmurfs = () => dispatch => {
-  dispatch(smurfsLoading());
+  dispatch(loading());
 
   return axios
     .get(`http://localhost:3333/smurfs`)
-    .then(res => dispatch(smurfsLoadSuccess(res.data)))
-    .catch(err => dispatch(smurfsLoadFailed(err.data)));
+    .then(res => dispatch(loadSuccess(res.data)))
+    .catch(err => dispatch(loadFailed(err.data)));
 };
 
 export const postSmurf = payload => dispatch => {
-  dispatch(smurfsLoading());
+  dispatch(loading());
 
-//   payloadShape: {
-//     name: "Sleepy",
-//     age: 200,
-//     height: "5cm",
-//     id: 1
-//   }
+  //   payloadShape: {
+  //     name: "Sleepy",
+  //     age: 200,
+  //     height: "5cm",
+  //     id: 1
+  //   }
 
   return axios
     .post(`http://localhost:3333/smurfs`, payload)
-    .then(() => dispatch(fetchSmurfs()))
-    .catch(err => dispatch(smurfsLoadFailed(err.data)));
+    .then(res => {
+      console.log(res.data);
+      dispatch(loadSuccess(res.data));
+    })
+    .catch(err => dispatch(loadFailed(err.data)));
 };
