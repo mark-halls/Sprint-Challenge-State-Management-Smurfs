@@ -5,6 +5,7 @@ The context api lets us pass state without prop drilling
 
 1. In your own words, describe `actions`, `reducers` and the `store` and their role in Redux. What does each piece do? Why is the store known as a 'single source of truth' in a redux application?
 
+
 actions are an object that describe what we want to happen to our state. They
 usually supply a payload that is used to modify the state as well.
 
